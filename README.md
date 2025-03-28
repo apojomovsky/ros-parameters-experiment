@@ -18,7 +18,7 @@ This project shows how to:
 ## Project Structure
 
 ```
-experiment/
+.
 ├── Dockerfiles/
 │   ├── Dockerfile.ros1
 │   ├── Dockerfile.ros2
@@ -34,7 +34,7 @@ experiment/
 
 ## How to Run
 
-From the `experiment/` folder:
+From the project root:
 
 ```
 ./run_experiment.sh
