@@ -1,0 +1,16 @@
+FROM ros:jazzy
+
+RUN apt-get update && apt-get install -y python3-colcon-common-extensions
+
+ENV ROS_WORKSPACE=/ros2_ws
+WORKDIR ${ROS_WORKSPACE}
+
+COPY ./ros2_ws ${ROS_WORKSPACE}
+COPY ./shared_params.yaml /shared_params.yaml
+
+RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build"
+
+COPY ./Dockerfiles/ros2_entrypoint.sh /ros2_entrypoint.sh
+RUN chmod +x /ros2_entrypoint.sh
+
+CMD ["/ros2_entrypoint.sh"]

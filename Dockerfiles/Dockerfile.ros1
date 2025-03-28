@@ -1,0 +1,21 @@
+FROM ros:noetic
+
+# Install tools
+RUN apt-get update && apt-get install -y python3-pip && pip3 install catkin-tools
+
+# Setup workspace
+ENV ROS_WORKSPACE=/ros1_ws
+WORKDIR ${ROS_WORKSPACE}
+
+COPY ./ros1_ws ${ROS_WORKSPACE}
+COPY ./shared_params.yaml /shared_params.yaml
+
+# Build
+RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin init && catkin build"
+
+# Run test script
+COPY ./Dockerfiles/ros1_entrypoint.sh /ros1_entrypoint.sh
+RUN chmod +x /ros1_entrypoint.sh
+
+CMD ["/ros1_entrypoint.sh"]
+
